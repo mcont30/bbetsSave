@@ -31,19 +31,20 @@ require(tidyverse)
 # Methods
 
 <!--Decide on your methods:  In this section explain the approach you will take to attack the issue --- how will you decide on a likely estimate of professor Brownlow's earnings or losses after 1137 bets. Also explain how you construct a 95% confidence interval about your estimate of his winnings !-->
-
+ 
 
 # Profit Estimate 
 
 ```{r}
-days=1:365
-count=15
-repeatn=1000
+days=1:365  # days of the year
+classCount=35  # number of students 
+nSims=1000 # number of simulations
+nBets=200
 varstor=numeric()
-for (j in 1:repeatn){
+for (j in 1:nSims){
 brownlow = 0
-for (i in 1:count) {
-  sam=sample(days,size=34,replace = T)
+for (i in 1:nBets) {
+  sam=sample(days,size=classCount,replace = T)
   y=duplicated(sam)
   if (sum(y)>0) brownlow=brownlow+1
   else brownlow = brownlow - 2
@@ -65,6 +66,13 @@ print(paste('average return = ', mean(varstor)))
 # Confidence interval of Brownlows earning
 
 <!--Explain and display your method of coming up with a 95% confidence interval of  professor Brownlows-->
+
+```{r}
+sortedVar = sort(varstor)
+CI = c(sortedVar[50], sortedVar[950])
+print(CI)
+```
+
 
 
 # Discussion and Conclusion
